@@ -1,11 +1,13 @@
 import { FC, useMemo, useState } from "react";
 import { FiArrowRight, FiGrid, FiList } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { catalogProducts } from "../data/catalog";
 
 const Shop: FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Tous");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedCategory = searchParams.get("category") ?? "Tous";
+  const searchQuery = searchParams.get("q")?.trim() ?? "";
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const shouldReduceMotion = useReducedMotion();
 
@@ -17,10 +19,21 @@ const Shop: FC = () => {
     () =>
       catalogProducts.filter(
         (product) =>
-          selectedCategory === "Tous" || product.category === selectedCategory,
+          (selectedCategory === "Tous" || product.category === selectedCategory) &&
+          (!searchQuery ||
+            `${product.name} ${product.category}`.toLocaleLowerCase("fr").includes(
+              searchQuery.toLocaleLowerCase("fr"),
+            )),
       ),
-    [selectedCategory],
+    [selectedCategory, searchQuery],
   );
+
+  const selectCategory = (category: string) => {
+    const nextParams = new URLSearchParams(searchParams);
+    if (category === "Tous") nextParams.delete("category");
+    else nextParams.set("category", category);
+    setSearchParams(nextParams);
+  };
 
   return (
     <div className="min-h-screen bg-[#faf8f4] text-[#211c18]">
@@ -55,11 +68,27 @@ const Shop: FC = () => {
             <p className="mb-4 text-[9px] font-semibold uppercase tracking-[0.28em] text-[#9a7d50]">
               Explorer par univers
             </p>
+            {searchQuery && (
+              <p className="mb-3 text-xs text-[#756c60]">
+                Résultats pour « {searchQuery} »
+                <button
+                  type="button"
+                  onClick={() => {
+                    const nextParams = new URLSearchParams(searchParams);
+                    nextParams.delete("q");
+                    setSearchParams(nextParams);
+                  }}
+                  className="ml-2 underline underline-offset-2 hover:text-[#8b7045]"
+                >
+                  Effacer
+                </button>
+              </p>
+            )}
             <div className="flex flex-wrap gap-2 sm:gap-3">
               {categories.map((category) => (
                 <button
                   key={category}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => selectCategory(category)}
                   aria-pressed={selectedCategory === category}
                   className={`border px-4 py-2.5 text-[9px] font-semibold uppercase tracking-[0.15em] transition-all duration-300 sm:px-5 ${
                     selectedCategory === category
@@ -75,7 +104,7 @@ const Shop: FC = () => {
 
           <div className="flex items-center justify-between gap-4 md:justify-end">
             <p className="text-[9px] uppercase tracking-[0.18em] text-[#8a8073]">
-              {products.length} pièces
+              {products.length} pièce{products.length === 1 ? "" : "s"}
             </p>
             <div className="flex items-center gap-1 border-l border-[#e2d9cc] pl-3">
               <button

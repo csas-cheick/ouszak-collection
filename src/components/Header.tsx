@@ -1,11 +1,18 @@
-import { FC, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { FC, FormEvent, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FiSearch, FiMenu, FiX } from "react-icons/fi";
+import { LogIn, ShoppingBag } from "lucide-react";
 
 const Header: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setSearch(new URLSearchParams(location.search).get("q") ?? "");
+  }, [location.search]);
 
   const navLinks = [
     { name: "Accueil", path: "/" },
@@ -15,30 +22,37 @@ const Header: FC = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  const submitSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const query = search.trim();
+    navigate(query ? `/shop?q=${encodeURIComponent(query)}` : "/shop");
+    setIsSearchOpen(false);
+  };
+
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white">
       <nav className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-black text-white flex items-center justify-center font-serif font-bold text-xl">
+        <div className="flex h-20 items-center justify-between">
+          <Link to="/" className="group flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center bg-black font-serif text-xl font-bold text-white">
               O
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-serif font-bold tracking-widest leading-none text-black">
+              <span className="font-serif text-lg font-bold leading-none tracking-widest text-black">
                 OUSZAK
               </span>
-              <span className="text-[10px] font-medium tracking-[0.3em] text-gray-500 group-hover:text-black transition-colors leading-none mt-1">
+              <span className="mt-1 text-[10px] font-medium leading-none tracking-[0.3em] text-gray-500 transition-colors group-hover:text-black">
                 COLLECTION
               </span>
             </div>
           </Link>
 
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden items-center space-x-8 lg:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`relative text-sm font-medium transition-colors group ${
+                className={`group relative text-sm font-medium transition-colors ${
                   isActive(link.path)
                     ? "text-gray-900"
                     : "text-gray-600 hover:text-gray-900"
@@ -54,58 +68,78 @@ const Header: FC = () => {
             ))}
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <button
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="p-2 text-gray-700 hover:text-gray-900 transition-colors"
-              aria-label="Rechercher"
+              onClick={() => setIsSearchOpen((open) => !open)}
+              className="p-2 text-gray-700 transition-colors hover:text-gray-900"
+              aria-label={isSearchOpen ? "Fermer la recherche" : "Rechercher"}
+              aria-expanded={isSearchOpen}
             >
-              <FiSearch className="w-5 h-5" />
+              <FiSearch className="h-5 w-5" />
             </button>
+            <span
+              className="flex h-10 w-9 cursor-not-allowed items-center justify-center text-gray-700"
+              aria-label="Panier, bientôt disponible"
+              title="Panier — bientôt disponible"
+            >
+              <ShoppingBag size={19} strokeWidth={1.7} />
+            </span>
+            <Link
+              to="/admin/login"
+              className="hidden items-center gap-2 bg-[#211c18] px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#8b7045] sm:flex"
+            >
+              <LogIn size={14} />
+              Se connecter
+            </Link>
             <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden p-2 text-gray-700 hover:text-gray-900"
+              onClick={() => setIsMenuOpen((open) => !open)}
+              className="p-2 text-gray-700 hover:text-gray-900 lg:hidden"
               aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+              aria-expanded={isMenuOpen}
             >
               {isMenuOpen ? (
-                <FiX className="w-6 h-6" />
+                <FiX className="h-6 w-6" />
               ) : (
-                <FiMenu className="w-6 h-6" />
+                <FiMenu className="h-6 w-6" />
               )}
             </button>
           </div>
         </div>
 
         {isSearchOpen && (
-          <div className="py-4 border-t border-gray-200">
-            <div className="relative max-w-2xl mx-auto">
+          <form onSubmit={submitSearch} role="search" className="border-t border-gray-200 py-4">
+            <div className="relative mx-auto max-w-2xl">
               <input
-                type="text"
+                type="search"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
                 placeholder="Rechercher des produits..."
-                className="w-full px-6 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                aria-label="Rechercher des produits"
+                className="w-full rounded-full border border-gray-300 px-6 py-3 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-black"
                 autoFocus
               />
               <button
-                className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition-colors"
-                aria-label="Rechercher"
+                type="submit"
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black px-6 py-2 text-white transition-colors hover:bg-gray-800"
+                aria-label="Lancer la recherche"
               >
-                <FiSearch className="w-4 h-4" />
+                <FiSearch className="h-4 w-4" />
               </button>
             </div>
-          </div>
+          </form>
         )}
       </nav>
 
       {isMenuOpen && (
-        <div className="lg:hidden border-t border-gray-200 bg-white">
+        <div className="border-t border-gray-200 bg-white lg:hidden">
           <div className="container mx-auto px-6 py-4">
-            <nav className="space-y-1">
+            <nav className="space-y-1" aria-label="Menu mobile">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`block py-3 px-4 rounded-lg text-base font-medium transition-colors ${
+                  className={`block rounded-lg px-4 py-3 text-base font-medium transition-colors ${
                     isActive(link.path)
                       ? "bg-gray-100 text-gray-900"
                       : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
@@ -114,6 +148,14 @@ const Header: FC = () => {
                   {link.name}
                 </Link>
               ))}
+              <Link
+                to="/admin/login"
+                onClick={() => setIsMenuOpen(false)}
+                className="mt-3 flex items-center gap-2 bg-[#211c18] px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-[#8b7045]"
+              >
+                <LogIn size={16} />
+                <span>Se connecter</span>
+              </Link>
             </nav>
           </div>
         </div>

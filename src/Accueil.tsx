@@ -60,9 +60,9 @@ const Accueil: FC = () => {
 
   return (
     <div className="overflow-hidden bg-[#faf8f4] text-[#211c18]">
-      <section className="relative isolate min-h-[690px] overflow-hidden border-b border-[#e9e2d7] md:min-h-[calc(100svh-5rem)]">
+      <section className="relative isolate min-h-[620px] overflow-hidden border-b border-[#e9e2d7] sm:min-h-[690px] md:min-h-[calc(100svh-5rem)]">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_74%_46%,rgba(202,177,132,0.2),transparent_38%),linear-gradient(110deg,#faf8f4_0%,#f7f3ec_54%,#eee7da_100%)]" />
-        <div className="container mx-auto grid min-h-[690px] max-w-7xl items-center gap-4 px-6 pb-20 pt-12 md:min-h-[calc(100svh-5rem)] md:grid-cols-[0.95fr_1.05fr] md:px-10 md:py-12">
+        <div className="container mx-auto grid min-h-[620px] max-w-7xl items-center gap-3 px-5 pb-16 pt-8 sm:min-h-[690px] sm:gap-4 sm:px-6 sm:pb-20 sm:pt-12 md:min-h-[calc(100svh-5rem)] md:grid-cols-[0.95fr_1.05fr] md:px-10 md:py-12">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -85,7 +85,7 @@ const Accueil: FC = () => {
             </motion.p>
             <motion.h1
               variants={reveal}
-              className="font-serif text-5xl font-light leading-[1.08] tracking-[-0.045em] sm:text-6xl md:text-7xl lg:text-[5.5rem]"
+              className="font-serif text-4xl font-light leading-[1.08] tracking-[-0.045em] sm:text-6xl md:text-7xl lg:text-[5.5rem]"
             >
               L’élégance
               <br />
@@ -100,11 +100,11 @@ const Accueil: FC = () => {
             </motion.p>
             <motion.div
               variants={reveal}
-              className="mt-9 flex flex-wrap items-center gap-5"
+              className="mt-7 flex flex-wrap items-center gap-4 sm:mt-9 sm:gap-5"
             >
               <Link
                 to="/shop"
-                className="group inline-flex items-center gap-4 bg-[#211c18] px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:bg-[#8b7045] md:px-8"
+                className="group inline-flex items-center gap-2 bg-[#211c18] px-5 py-3.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-white transition-colors duration-300 hover:bg-[#8b7045] sm:gap-4 sm:px-7 sm:py-4 sm:text-[10px] sm:tracking-[0.2em] md:px-8"
               >
                 Découvrir la collection
                 <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
@@ -142,7 +142,7 @@ const Accueil: FC = () => {
             initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: shouldReduceMotion ? 0 : 1.1, ease: "easeOut" }}
-            className="relative order-1 mx-auto flex h-[390px] w-full max-w-lg items-center justify-center md:order-2 md:h-[min(76vh,760px)] md:max-w-none"
+            className="relative order-1 mx-auto flex h-[320px] w-full max-w-lg items-center justify-center sm:h-[360px] md:order-2 md:h-[min(76vh,760px)] md:max-w-none"
           >
             <div className="absolute left-1/2 top-1/2 aspect-square w-[78%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#bda77f]/40" />
             <div className="absolute left-1/2 top-1/2 aspect-square w-[62%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#e8decd]/70 blur-2xl" />
@@ -165,7 +165,7 @@ const Accueil: FC = () => {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.65, duration: 0.6 }}
-              className="absolute bottom-5 right-1 z-20 border border-white/70 bg-[#faf8f4]/90 px-5 py-4 shadow-[0_15px_45px_rgba(49,37,23,0.08)] backdrop-blur-sm sm:bottom-9 sm:right-0"
+              className="absolute bottom-3 right-1 z-20 border border-white/70 bg-[#faf8f4]/90 px-3 py-3 shadow-[0_15px_45px_rgba(49,37,23,0.08)] backdrop-blur-sm sm:bottom-9 sm:right-0 sm:px-5 sm:py-4"
             >
               <p className="font-serif text-lg italic text-[#514433]">
                 L’art du détail
@@ -206,7 +206,7 @@ const Accueil: FC = () => {
 
       <section
         id="univers"
-        className="container mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-32"
+        className="container mx-auto max-w-7xl px-5 py-14 sm:px-6 sm:py-20 md:px-10 md:py-32"
       >
         <div className="grid items-center gap-12 md:grid-cols-2 md:gap-20">
           <motion.div
@@ -280,8 +280,8 @@ const Accueil: FC = () => {
         </div>
       </section>
 
-      <section className="bg-[#f1ede5] py-20 md:py-28">
-        <div className="container mx-auto max-w-7xl px-6 md:px-10">
+      <section className="bg-[#f1ede5] py-14 sm:py-20 md:py-28">
+        <div className="container mx-auto max-w-7xl px-5 sm:px-6 md:px-10">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -374,22 +374,22 @@ const Accueil: FC = () => {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[#211c18] py-16 text-[#f8f4ed] sm:py-20 md:py-28">
+      <section className="relative overflow-hidden bg-[#211c18] py-12 text-[#f8f4ed] sm:py-20 md:py-28">
         <div className="pointer-events-none absolute -right-44 top-0 h-[34rem] w-[34rem] rounded-full border border-[#d6c4a0]/10" />
         <div className="pointer-events-none absolute -right-24 top-20 h-[24rem] w-[24rem] rounded-full border border-[#d6c4a0]/10" />
-        <div className="container relative mx-auto max-w-7xl px-5 sm:px-8 md:px-10">
+        <div className="container relative mx-auto max-w-7xl px-4 sm:px-8 md:px-10">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={reveal}
-            className="mb-8 flex items-end justify-between gap-5 sm:mb-10"
+            className="mb-6 flex items-end justify-between gap-3 sm:mb-10 sm:gap-5"
           >
             <div>
               <p className="mb-3 text-[9px] font-semibold uppercase tracking-[0.32em] text-[#d7bd91] sm:text-[10px]">
                 OUSZAK COLLECTION
               </p>
-              <h2 className="font-serif text-3xl font-light tracking-[-0.035em] sm:text-4xl md:text-5xl">
+              <h2 className="font-serif text-2xl font-light tracking-[-0.035em] sm:text-4xl md:text-5xl">
                 Le style prend <span className="italic text-[#d7bd91]">forme.</span>
               </h2>
             </div>
@@ -402,21 +402,21 @@ const Accueil: FC = () => {
             </Link>
           </motion.div>
 
-          <div className="grid gap-4 md:grid-cols-[1.18fr_0.82fr] md:gap-5">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-[1.18fr_0.82fr] md:gap-5">
             <motion.div
               initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 26 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.7, ease: "easeOut" }}
-              className="min-w-0"
+              className="col-span-2 min-w-0 md:col-span-1"
             >
               <Link
                 to="/shop"
-                className="group relative block min-h-[430px] overflow-hidden border border-[#d8c7a8]/70 bg-[radial-gradient(ellipse_at_70%_32%,#fffdf9_0%,#f3ede2_64%,#e9dfcf_100%)] shadow-[0_24px_70px_rgba(8,6,4,0.2)] sm:min-h-[510px] md:h-full md:min-h-[690px]"
+                className="group relative block min-h-[360px] overflow-hidden border border-[#d8c7a8]/70 bg-[radial-gradient(ellipse_at_70%_32%,#fffdf9_0%,#f3ede2_64%,#e9dfcf_100%)] shadow-[0_24px_70px_rgba(8,6,4,0.2)] sm:min-h-[510px] md:h-full md:min-h-[690px]"
               >
-                <div className="absolute inset-4 z-20 border border-[#ae9165]/35 sm:inset-6" />
-                <span className="absolute left-8 top-8 z-30 text-[9px] font-semibold tracking-[0.25em] text-[#756142] sm:left-10 sm:top-10">
-                  / CRÉATION
+                <div className="absolute inset-3 z-20 border border-[#ae9165]/35 sm:inset-6" />
+                <span className="absolute left-6 top-6 z-30 text-[8px] font-semibold tracking-[0.2em] text-[#756142] sm:left-10 sm:top-10 sm:text-[9px] sm:tracking-[0.25em]">
+                  01 / CRÉATION
                 </span>
                 <div className="absolute right-[-8%] top-[8%] z-0 aspect-square w-[68%] rounded-full border border-[#ad916b]/20" />
                 {coutureProduct && (
@@ -424,33 +424,33 @@ const Accueil: FC = () => {
                     src={coutureProduct.image}
                     alt="Création de couture sur mesure OUSZAK"
                     loading="lazy"
-                    className="absolute inset-x-0 top-0 z-10 h-[88%] w-full object-contain p-3 mix-blend-multiply transition-transform duration-700 ease-out group-hover:scale-[1.025] sm:p-5 md:h-[87%] md:p-7"
+                    className="absolute inset-x-0 top-0 z-10 h-[86%] w-full object-contain p-2 mix-blend-multiply transition-transform duration-700 ease-out group-hover:scale-[1.025] sm:p-5 md:h-[87%] md:p-7"
                   />
                 )}
                 <div className="absolute inset-x-0 bottom-0 z-20 h-56 bg-gradient-to-t from-[#eee6d9] via-[#eee6d9]/90 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 z-30 flex items-end justify-between gap-4 p-7 sm:p-10">
+                <div className="absolute inset-x-0 bottom-0 z-30 flex items-end justify-between gap-2 p-5 sm:gap-4 sm:p-10">
                   <div>
                     <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.22em] text-[#9a7d50]">
                       L’élégance du geste
                     </p>
-                    <h3 className="font-serif text-3xl font-light tracking-[-0.025em] text-[#302820] sm:text-4xl md:text-5xl">
+                    <h3 className="font-serif text-2xl font-light tracking-[-0.025em] text-[#302820] sm:text-4xl md:text-5xl">
                       Le sur-mesure
                     </h3>
                     <p className="mt-2 text-xs text-[#71675b] sm:text-sm">
                       Une création qui n’appartient qu’à vous.
                     </p>
                   </div>
-                  <span className="mb-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#9e835a]/50 text-[#594831] transition-all duration-300 group-hover:border-[#211c18] group-hover:bg-[#211c18] group-hover:text-white">
+                  <span className="mb-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#9e835a]/50 text-[#594831] transition-all duration-300 group-hover:border-[#211c18] group-hover:bg-[#211c18] group-hover:text-white sm:h-11 sm:w-11">
                     <FiArrowRight />
                   </span>
                 </div>
               </Link>
             </motion.div>
 
-            <div className="grid min-w-0 gap-4 sm:grid-cols-2 md:grid-cols-1 md:grid-rows-2 md:gap-5">
+            <div className="col-span-2 grid min-w-0 grid-cols-2 gap-3 md:col-span-1 md:grid-cols-1 md:grid-rows-2 md:gap-5">
               {[
                 {
-                  index: "",
+                  index: "02",
                   label: "PARFUMS",
                   title: "Le sillage",
                   image: featuredProducts.find((product) => product.category === "Parfums")?.image,
@@ -458,7 +458,7 @@ const Accueil: FC = () => {
                   destination: featuredProducts.find((product) => product.category === "Parfums")?.id,
                 },
                 {
-                  index: "",
+                  index: "03",
                   label: "CHAUSSURES",
                   title: "L’allure",
                   image: featuredProducts.find((product) => product.category === "Chaussures")?.image,
@@ -480,7 +480,7 @@ const Accueil: FC = () => {
                 >
                   <Link
                     to={item.destination ? `/product/${item.destination}` : "/shop"}
-                    className={`group relative block min-h-[290px] overflow-hidden border border-white/70 shadow-[0_16px_45px_rgba(8,6,4,0.12)] ${item.background} sm:min-h-[340px] md:h-full md:min-h-[330px]`}
+                    className={`group relative block min-h-[220px] overflow-hidden border border-white/70 shadow-[0_16px_45px_rgba(8,6,4,0.12)] ${item.background} sm:min-h-[340px] md:h-full md:min-h-[330px]`}
                   >
                     <span className="absolute left-5 top-5 z-20 text-[9px] font-semibold tracking-[0.23em] text-[#6c5a43]/75 sm:left-7 sm:top-7">
                       {item.index} / {item.label}
@@ -490,7 +490,7 @@ const Accueil: FC = () => {
                         src={item.image}
                         alt={item.title}
                         loading="lazy"
-                        className="absolute inset-0 h-full w-full object-contain p-5 mix-blend-multiply transition-transform duration-700 ease-out group-hover:scale-[1.035] sm:p-7 md:p-5"
+                        className="absolute inset-0 h-full w-full object-contain p-2 mix-blend-multiply transition-transform duration-700 ease-out group-hover:scale-[1.035] sm:p-7 md:p-5"
                       />
                     )}
                     <div className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between bg-gradient-to-t from-[#211c18]/75 to-transparent px-5 pb-5 pt-20 text-white sm:px-7 sm:pb-7">
@@ -498,7 +498,7 @@ const Accueil: FC = () => {
                         <p className="mb-1 text-[9px] uppercase tracking-[0.22em] text-[#e8d5b3]">
                           Découvrir l’univers
                         </p>
-                        <h3 className="font-serif text-3xl font-light sm:text-4xl">
+                        <h3 className="font-serif text-2xl font-light sm:text-4xl">
                           {item.title}
                         </h3>
                       </div>
