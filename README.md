@@ -22,19 +22,37 @@ La connexion et les données de caisse utilisent Supabase. Renseignez
 `VITE_SUPABASE_URL` et `VITE_SUPABASE_ANON_KEY` dans votre fichier `.env`, puis
 exécutez `supabase/schema.sql` dans le SQL Editor du projet Supabase.
 
-Dans Supabase Auth, désactivez les inscriptions publiques et créez les comptes
-administrateurs depuis le tableau de bord Supabase. Après avoir créé un compte,
-attribuez-lui l’accès en exécutant dans le SQL Editor, en remplaçant l’UUID par
-celui de l’utilisateur :
+### Configuration de Supabase
 
-```sql
-insert into public.admin_users (user_id)
-values ('UUID-DE-L-UTILISATEUR');
-```
+1. Créez un projet sur [supabase.com/dashboard](https://supabase.com/dashboard).
+2. Dans **Project Settings → API**, copiez le **Project URL** et la clé
+   **anon / publishable**.
+3. Ajoutez ces valeurs à votre fichier `.env` à la racine du projet :
+
+   ```dotenv
+   VITE_SUPABASE_URL=https://votre-projet.supabase.co
+   VITE_SUPABASE_ANON_KEY=votre-cle-anon-ou-publishable
+   ```
+
+4. Dans **SQL Editor**, exécutez le contenu de `supabase/schema.sql`.
+5. Dans **Authentication → Users**, créez votre utilisateur administrateur.
+   Désactivez les inscriptions publiques dans les paramètres d’authentification
+   si elles ne sont pas nécessaires.
+6. Copiez l’UUID de cet utilisateur puis, dans le SQL Editor, accordez-lui le rôle
+   administrateur :
+
+   ```sql
+   insert into public.admin_users (user_id)
+   values ('UUID-DE-L-UTILISATEUR');
+   ```
+
+7. Redémarrez Vite après avoir modifié `.env`, puis ouvrez `/admin/login` et
+   connectez-vous avec l’adresse et le mot de passe de l’utilisateur créé.
 
 Les ventes, dépenses et sessions de caisse sont protégées par Row Level Security.
-Ne placez jamais la clé `service_role` dans une variable `VITE_*` ni dans le code
-du navigateur.
+La clé **anon / publishable** est prévue pour le client navigateur avec ces règles
+RLS. Ne placez jamais la clé `service_role` dans une variable `VITE_*` ni dans le
+code du navigateur.
 
 ## Développement
 

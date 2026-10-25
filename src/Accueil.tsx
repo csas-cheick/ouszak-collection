@@ -10,7 +10,13 @@ import {
 } from "react-icons/fi";
 import { FaTiktok, FaWhatsapp } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useSpring,
+  type Variants,
+} from "framer-motion";
+import type { PointerEvent } from "react";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -46,8 +52,24 @@ const services = [
 
 const Accueil: FC = () => {
   const shouldReduceMotion = useReducedMotion();
+  const rotateX = useSpring(0, { stiffness: 120, damping: 18, mass: 0.7 });
+  const rotateY = useSpring(0, { stiffness: 120, damping: 18, mass: 0.7 });
   const featuredProducts = catalogProducts.filter((product) => !product.isModel);
   const coutureProduct = catalogProducts.find((product) => product.isModel);
+
+  const handleHeroPointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (shouldReduceMotion || event.pointerType !== "mouse") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+    rotateY.set(x * 9);
+    rotateX.set(y * -7);
+  };
+
+  const resetHeroTilt = () => {
+    rotateX.set(0);
+    rotateY.set(0);
+  };
 
   const reveal: Variants = {
     hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 28 },
@@ -143,13 +165,27 @@ const Accueil: FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: shouldReduceMotion ? 0 : 1.1, ease: "easeOut" }}
             className="relative order-1 mx-auto flex h-[320px] w-full max-w-lg items-center justify-center sm:h-[360px] md:order-2 md:h-[min(76vh,760px)] md:max-w-none"
+            style={{ perspective: 1100 }}
+            onPointerMove={handleHeroPointerMove}
+            onPointerLeave={resetHeroTilt}
           >
             <div className="absolute left-1/2 top-1/2 aspect-square w-[78%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#bda77f]/40" />
             <div className="absolute left-1/2 top-1/2 aspect-square w-[62%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#e8decd]/70 blur-2xl" />
+            <motion.div
+              aria-hidden="true"
+              className="absolute left-[16%] top-[12%] z-[1] h-[72%] w-[68%] rounded-[48%] border border-white/80 bg-gradient-to-br from-white/70 via-[#eee5d6]/45 to-[#c6b18c]/20 shadow-[24px_32px_60px_rgba(49,37,23,0.12)]"
+              style={{ rotateX, rotateY, translateZ: -24, transformStyle: "preserve-3d" }}
+            />
             <motion.img
               src={heroImage}
               alt="Création OUSZAK COLLECTION"
-              className="relative z-10 h-full w-full object-contain drop-shadow-[0_28px_32px_rgba(49,37,23,0.16)]"
+              className="relative z-10 h-full w-full object-contain drop-shadow-[0_36px_38px_rgba(49,37,23,0.24)]"
+              style={{
+                rotateX: shouldReduceMotion ? 0 : rotateX,
+                rotateY: shouldReduceMotion ? 0 : rotateY,
+                translateZ: 38,
+                transformStyle: "preserve-3d",
+              }}
               animate={
                 shouldReduceMotion
                   ? undefined
@@ -166,6 +202,7 @@ const Accueil: FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.65, duration: 0.6 }}
               className="absolute bottom-3 right-1 z-20 border border-white/70 bg-[#faf8f4]/90 px-3 py-3 shadow-[0_15px_45px_rgba(49,37,23,0.08)] backdrop-blur-sm sm:bottom-9 sm:right-0 sm:px-5 sm:py-4"
+              style={{ translateZ: 90, transformStyle: "preserve-3d" }}
             >
               <p className="font-serif text-lg italic text-[#514433]">
                 L’art du détail
