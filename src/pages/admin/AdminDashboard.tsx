@@ -237,7 +237,7 @@ const AdminDashboard: FC = () => {
         />
       )}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-[min(82vw,290px)] flex-col border-r border-[#e9e5dd] bg-white transition-transform duration-200 md:w-56 md:translate-x-0 lg:w-64 ${
+        className={`fixed inset-y-0 left-0 z-40 flex w-[min(82vw,290px)] flex-col overflow-y-auto border-r border-[#e9e5dd] bg-white transition-transform duration-200 md:w-56 md:translate-x-0 lg:w-64 ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -279,7 +279,7 @@ const AdminDashboard: FC = () => {
         </div>
       </aside>
 
-      <div className="min-h-screen md:pl-56 lg:pl-64">
+      <div className="min-h-screen min-w-0 md:pl-56 lg:pl-64">
         <header className="sticky top-0 z-20 flex h-[76px] items-center justify-between border-b border-[#e9e5dd] bg-white/95 px-4 backdrop-blur sm:px-7 lg:px-10">
           <div className="flex items-center gap-3">
             <button
@@ -302,7 +302,7 @@ const AdminDashboard: FC = () => {
           </span>
         </header>
 
-        <main className="mx-auto max-w-[1440px] px-4 py-6 sm:px-7 sm:py-8 lg:px-10">
+        <main className="mx-auto max-w-[1440px] min-w-0 px-4 py-6 sm:px-7 sm:py-8 lg:px-10">
           {error && (
             <div role="alert" className="mb-5 flex items-start justify-between gap-3 border border-red-200 bg-red-50 px-4 py-3 text-xs leading-5 text-red-800">
               {error}
@@ -317,13 +317,13 @@ const AdminDashboard: FC = () => {
 
           {section === "overview" && (
             <>
-              <div className="mb-7 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+              <div className="mb-7 flex flex-col justify-between gap-5 xl:flex-row xl:items-end">
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#9a7d50]">Votre boutique en un regard</p>
                   <h1 className="mt-2 font-serif text-3xl font-light sm:text-4xl">Bonjour, bienvenue.</h1>
                   <p className="mt-2 text-xs text-stone-500">Voici le résumé de l’activité de votre boutique aujourd’hui.</p>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-2 xl:flex xl:flex-wrap">
                   <ActionButton icon={Plus} label="Enregistrer une vente" onClick={() => openDialog("sale")} primary />
                   <ActionButton icon={ArrowDownLeft} label="Ajouter une dépense" onClick={() => openDialog("expense")} />
                   <ActionButton
@@ -334,14 +334,14 @@ const AdminDashboard: FC = () => {
                 </div>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4">
                 <MetricCard label="Ventes du jour" value={money.format(todaySales)} icon={ArrowUpRight} detail={`${sales.length} ventes récentes`} />
                 <MetricCard label="Dépenses du jour" value={money.format(todayExpenses)} icon={ArrowDownLeft} detail={`${expenses.length} dépenses récentes`} />
                 <MetricCard label="Solde net du jour" value={money.format(todaySales - todayExpenses)} icon={CircleDollarSign} detail="Ventes moins dépenses" />
                 <MetricCard label="État de la caisse" value={activeCash ? "Ouverte" : "Fermée"} icon={Wallet} detail={activeCash ? `Depuis ${dateLabel(activeCash.opened_at)}` : "Aucune session en cours"} />
               </div>
 
-              <div className="mt-7 grid gap-5 xl:grid-cols-[1.5fr_1fr]">
+              <div className="mt-7 grid min-w-0 gap-5 xl:grid-cols-[1.5fr_1fr]">
                 <section className="border border-[#e9e5dd] bg-white">
                   <div className="flex items-center justify-between border-b border-[#eeeae3] px-5 py-4">
                     <div>
@@ -495,7 +495,7 @@ const ActionButton: FC<{
 }> = ({ icon: Icon, label, onClick, primary }) => (
   <button
     onClick={onClick}
-    className={`inline-flex min-h-10 items-center justify-center gap-2 px-3 text-[10px] font-semibold transition sm:px-4 ${
+    className={`inline-flex min-h-10 w-full items-center justify-center gap-2 whitespace-nowrap px-3 text-[10px] font-semibold transition sm:w-auto sm:px-4 ${
       primary
         ? "bg-[#211c18] text-white hover:bg-[#796342]"
         : "border border-[#ddd7cb] bg-white text-[#51483a] hover:border-[#9a7d50]"
@@ -511,20 +511,20 @@ const MetricCard: FC<{
   icon: typeof Plus;
   detail: string;
 }> = ({ label, value, icon: Icon, detail }) => (
-  <div className="border border-[#e9e5dd] bg-white p-5">
+  <div className="border border-[#e9e5dd] bg-white p-3 sm:p-4">
     <div className="flex items-start justify-between">
-      <p className="text-[10px] font-medium text-stone-500">{label}</p>
-      <span className="grid h-8 w-8 place-items-center bg-[#f5f1e9] text-[#8b7045]"><Icon size={16} /></span>
+      <p className="text-[9px] font-medium text-stone-500 sm:text-[10px]">{label}</p>
+      <span className="grid h-7 w-7 place-items-center bg-[#f5f1e9] text-[#8b7045]"><Icon size={14} /></span>
     </div>
-    <p className="mt-4 font-serif text-2xl">{value}</p>
-    <p className="mt-1 text-[10px] text-stone-400">{detail}</p>
+    <p className="mt-2 break-words font-serif text-lg sm:mt-3 sm:text-xl">{value}</p>
+    <p className="mt-1 break-words text-[9px] text-stone-400">{detail}</p>
   </div>
 );
 
 const InfoLine: FC<{ label: string; value: string }> = ({ label, value }) => (
-  <div className="flex items-start justify-between gap-4 text-xs">
-    <span className="text-stone-500">{label}</span>
-    <span className="text-right font-medium text-stone-800">{value}</span>
+  <div className="flex min-w-0 items-start justify-between gap-4 text-xs">
+    <span className="min-w-0 text-stone-500">{label}</span>
+    <span className="min-w-0 break-words text-right font-medium text-stone-800">{value}</span>
   </div>
 );
 
@@ -573,7 +573,7 @@ const RecordSection: FC<{
   rows: ActivityRow[];
 }> = ({ title, description, actionLabel, onAction, loading, rows }) => (
   <section>
-    <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+    <div className="mb-6 flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
       <div>
         <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#9a7d50]">Suivi de la boutique</p>
         <h1 className="mt-2 font-serif text-3xl font-light">{title}</h1>
@@ -614,7 +614,7 @@ const EntryDialog: FC<{
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/45 p-0 sm:items-center sm:p-5" role="presentation" onMouseDown={(event) => {
       if (event.target === event.currentTarget) onClose();
     }}>
-      <section role="dialog" aria-modal="true" aria-labelledby="entry-dialog-title" className="w-full max-w-md bg-white p-5 shadow-2xl sm:p-7">
+      <section role="dialog" aria-modal="true" aria-labelledby="entry-dialog-title" className="max-h-[calc(100dvh-1rem)] w-full max-w-md overflow-y-auto rounded-t-xl bg-white p-5 shadow-2xl sm:max-h-[calc(100dvh-2.5rem)] sm:rounded-none sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 id="entry-dialog-title" className="font-serif text-2xl">{title}</h2>

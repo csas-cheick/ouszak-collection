@@ -48,25 +48,25 @@ const AdminLogin = () => {
         <p className="relative text-[10px] tracking-[0.18em] text-white/45">OUSZAK COLLECTION · NIAMEY</p>
       </section>
 
-      <section className="flex items-center justify-center px-5 py-12 sm:px-10">
+      <section className="flex items-center justify-center px-5 py-6 sm:px-10 sm:py-12 lg:py-8">
         <div className="w-full max-w-md">
           <Link to="/" className="inline-flex items-center gap-2 text-xs text-stone-500 transition hover:text-stone-900">
             <ArrowLeft size={15} /> Retour à la boutique
           </Link>
-          <div className="mb-8 mt-14 lg:hidden">
+          <div className="mb-5 mt-6 sm:mb-8 sm:mt-14 lg:hidden">
             <p className="font-serif text-lg tracking-[0.15em]">OUSZAK</p>
             <p className="text-[9px] tracking-[0.32em] text-stone-500">COLLECTION</p>
           </div>
-          <div className="mb-8 mt-9">
-            <span className="mb-5 grid h-11 w-11 place-items-center rounded-full bg-[#ece5d8] text-[#705b3b]">
+          <div className="mb-6 mt-5 sm:mb-8 sm:mt-9">
+            <span className="mb-3 grid h-11 w-11 place-items-center rounded-full bg-[#ece5d8] text-[#705b3b] sm:mb-5">
               <LockKeyhole size={19} />
             </span>
             <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#9a7d50]">Administration</p>
             <h2 className="mt-2 font-serif text-4xl font-light text-[#211c18]">Se connecter</h2>
-            <p className="mt-3 text-sm leading-6 text-stone-500">Accédez à votre espace de gestion sécurisé.</p>
+            <p className="mt-2 text-sm leading-6 text-stone-500 sm:mt-3">Accédez à votre espace de gestion sécurisé.</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             <label className="block">
               <span className="mb-2 block text-xs font-medium text-stone-700">Adresse e-mail</span>
               <input
@@ -116,7 +116,7 @@ const AdminLogin = () => {
               {submitting ? "Connexion…" : "Accéder à mon espace"}
             </button>
           </form>
-          <p className="mt-8 border-t border-stone-200 pt-5 text-center text-[11px] leading-5 text-stone-400">
+          <p className="mt-6 border-t border-stone-200 pt-4 text-center text-[11px] leading-5 text-stone-400 sm:mt-8 sm:pt-5">
             Accès réservé aux administrateurs autorisés.
           </p>
         </div>
